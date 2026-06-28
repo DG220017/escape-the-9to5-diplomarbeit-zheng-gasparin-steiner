@@ -3,10 +3,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public interface IInteractable
-{
-    void Interact();
-}
 
 public class Interact : MonoBehaviour
 {
@@ -15,7 +11,6 @@ public class Interact : MonoBehaviour
     public TextMeshProUGUI InteractText;
     InputAction interact;
     PlayerInput playerInput;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,24 +22,27 @@ public class Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        InteractText.gameObject.SetActive(false); // immer Reset
 
         Ray ray = new Ray(InteractorSource.position, InteractorSource.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, InteractRange)) {
-            // Anzeige
+
+        if (Physics.Raycast(ray, out RaycastHit hit, InteractRange))
+        {
             if (hit.collider.CompareTag("InteractPrefab"))
             {
-                InteractText.gameObject.SetActive(true);
-
-                // CompareTag nimmt keinen out-Parameter — statt dessen TryGetComponent verwende
-                if (hit.collider != null && hit.collider.TryGetComponent<IInteractable>(out IInteractable interactObj) && interact.IsPressed())
+                if (hit.collider.TryGetComponent<Interactable>(out Interactable interactable))
                 {
-                    interactObj.Interact();
+                    if (interactable.CanInteract())
+                    {
+                        InteractText.gameObject.SetActive(true);
+
+                        if (interact.WasPressedThisFrame())
+                        {
+                            interactable.Interact();
+                        }
+                    }
                 }
             }
-        }
-        else
-        {
-            InteractText.gameObject.SetActive(false);
         }
     }
 

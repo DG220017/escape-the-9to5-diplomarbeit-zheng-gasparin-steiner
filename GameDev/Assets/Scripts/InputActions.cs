@@ -127,6 +127,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""8da4d11c-7248-4414-ab95-2be1e576fa7e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -294,6 +303,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12cbb268-a19b-421c-b71b-a078123efa9c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a5468ece-8cb1-4249-9d59-98514e5857d0"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -306,6 +337,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Inputactions_Sprint = m_Inputactions.FindAction("Sprint", throwIfNotFound: true);
         m_Inputactions_Look = m_Inputactions.FindAction("Look", throwIfNotFound: true);
         m_Inputactions_Interact = m_Inputactions.FindAction("Interact", throwIfNotFound: true);
+        m_Inputactions_Close = m_Inputactions.FindAction("Close", throwIfNotFound: true);
     }
 
     ~@InputActions()
@@ -390,6 +422,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Inputactions_Sprint;
     private readonly InputAction m_Inputactions_Look;
     private readonly InputAction m_Inputactions_Interact;
+    private readonly InputAction m_Inputactions_Close;
     /// <summary>
     /// Provides access to input actions defined in input action map "Input actions".
     /// </summary>
@@ -417,6 +450,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Inputactions/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Inputactions_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Inputactions/Close".
+        /// </summary>
+        public InputAction @Close => m_Wrapper.m_Inputactions_Close;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -455,6 +492,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Close.started += instance.OnClose;
+            @Close.performed += instance.OnClose;
+            @Close.canceled += instance.OnClose;
         }
 
         /// <summary>
@@ -478,6 +518,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Close.started -= instance.OnClose;
+            @Close.performed -= instance.OnClose;
+            @Close.canceled -= instance.OnClose;
         }
 
         /// <summary>
@@ -546,5 +589,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Close" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnClose(InputAction.CallbackContext context);
     }
 }
