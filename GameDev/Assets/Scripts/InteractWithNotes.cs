@@ -18,6 +18,11 @@ public class InteractWithNotes : MonoBehaviour, Interactable
         hasReadNotes = true;
         InteractWithBookshelf.hasReadNotes = true;
     }
+
+    public void setCanInteract(bool value)
+    {
+        hasReadNotes = value;
+    }
 }
 
 

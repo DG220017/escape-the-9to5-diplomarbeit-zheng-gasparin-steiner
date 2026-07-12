@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     PlayerInput playerInput;
     InputAction move;
     InputAction sprint;
+    bool isFrozen = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is createdd
     void Start()
@@ -31,11 +32,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isFrozen)  
+            return;
+
         if (sprint.IsPressed())
         {
             MovePlayer(sprintSpeed);
         }
         MovePlayer(initialMovespeed);
+    
     }
 
     void MovePlayer(float speed)
@@ -59,5 +64,18 @@ public class Player : MonoBehaviour
     {
         this.movespeed = initialMovespeed;
         this.sprintSpeed = initialMovespeed * sprintMulitiplyer;
+    }
+
+    public void freezePLayer()
+    {
+        
+        isFrozen = true;
+       
+    }
+
+    public void unfreezePlayer()
+    {
+
+        isFrozen = false;
     }
 }

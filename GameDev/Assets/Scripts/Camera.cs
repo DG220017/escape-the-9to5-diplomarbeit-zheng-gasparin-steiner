@@ -9,6 +9,7 @@ public class PlayerLook : MonoBehaviour
     float xRotation = 0f;
 
     private Vector2 lookInput;
+    public bool cameraFrozen = false;
 
 
     void Start()
@@ -24,16 +25,30 @@ public class PlayerLook : MonoBehaviour
 
     void Update()
     {
+
+        if (cameraFrozen) 
+            return;
+        
         float lookX = lookInput.x * sensitivity * Time.deltaTime;
         float lookY = lookInput.y * sensitivity * Time.deltaTime;
 
         xRotation -= lookY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        // Kamera hoch/runter
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        // Player links/rechts drehen
         playerBody.Rotate(Vector3.up * lookX);
+    }
+
+    public void freezeCamera()
+    {
+        cameraFrozen = true;
+        lookInput = Vector2.zero;
+    }
+
+    public void unfreezeCamera()
+    {
+        cameraFrozen = false;
+        lookInput = Vector2.zero;
     }
 }

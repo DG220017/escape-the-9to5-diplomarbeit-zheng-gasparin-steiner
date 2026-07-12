@@ -4,6 +4,7 @@ public class InteractWithBookshelf : MonoBehaviour, Interactable
 {
 
     public static bool hasReadNotes = false;
+    [SerializeField] private NoteUI noteUI;
 
     public bool CanInteract()
     {
@@ -14,7 +15,12 @@ public class InteractWithBookshelf : MonoBehaviour, Interactable
     {
         if (hasReadNotes)
         {
-            Debug.Log(" Interact wurde aufgerufen auf: " + gameObject.name);
+            Debug.Log(" Interact wurde aufgerufen auf: " + gameObject.name); 
         }
+    }
+
+    public void setCanInteract(bool value)
+    {
+        hasReadNotes = value;   
     }
 }
