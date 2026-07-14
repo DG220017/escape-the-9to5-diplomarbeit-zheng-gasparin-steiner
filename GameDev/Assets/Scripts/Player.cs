@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     //@Todo: Spieler soll langsamer werden wen gehen aufhört und nicht dierekt stoppen -> speed immer halbieren oder so
     [SerializeField] private float initialMovespeed = 5.0f;
-    [SerializeField] private float sprintMulitiplyer = 1.2f;
+    [SerializeField] private float sprintMulitiplyer = 1.5f;
 
     private float sprintSpeed;
 
@@ -68,11 +68,14 @@ public class Player : MonoBehaviour
 
     public void freezePLayer()
     {
+        
         isFrozen = true;
+       
     }
 
     public void unfreezePlayer()
     {
+
         isFrozen = false;
     }
 }
